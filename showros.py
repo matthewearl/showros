@@ -56,10 +56,14 @@ anim_lens = {
 
 # attack animation for each view model
 view_model_to_attack_anim = {
+    'progs/v_axe.mdl': 'axatt',
     'progs/v_shot.mdl': 'shotatt',
     'progs/v_shot2.mdl': 'shotatt',
     'progs/v_nail.mdl': 'nailatt',
-    'progs/v_axe.mdl': 'axatt',
+    'progs/v_nail2.mdl': 'nailatt',
+    'progs/v_rock.mdl': 'rockatt',
+    'progs/v_rock2.mdl': 'rockatt',
+    'progs/v_light.mdl': 'light',
 }
 
 # frame rate for each animation
