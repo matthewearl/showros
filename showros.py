@@ -114,6 +114,12 @@ def get_client_data(block):
                      for m in block.messages
                      if isinstance(m, messages.ClientDataMessage)))
 
+def get_models(block):
+    server_info_msg = next(iter(m
+                                for m in block.messages
+                                if isinstance(m, messages.ServerInfoMessage)))
+    return [m.decode('utf-8') for m in server_info_msg.models_precache]
+
 
 class BlockFixer:
     def __init__(self, models):
@@ -188,15 +194,23 @@ class BlockFixer:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print(f"usage: {sys.argv[0]} input-demo output-demo", file=sys.stderr)
+    if len(sys.argv) < 3 or len(sys.argv) > 4:
+        print(f"usage: {sys.argv[0]} input-demo output-demo [view-entity]",
+              file=sys.stderr)
         raise SystemExit(1)
     in_fname, out_fname = sys.argv[1:3]
 
     dem = pydem.parse_demo(in_fname)
-    view_entity = get_view_entity(dem.blocks[0])
-    models = [m.decode('utf-8')
-              for m in dem.blocks[0].messages[1].models_precache]
+    server_info_block_idx = 0
+    while dem.blocks[server_info_block_idx].messages == [messages.NopMessage()]:
+        server_info_block_idx += 1
+
+    if len(sys.argv) == 3:
+        view_entity = get_view_entity(dem.blocks[server_info_block_idx])
+    else:
+        view_entity = int(sys.argv[3])
+
+    models = get_models(dem.blocks[server_info_block_idx])
 
     bf = BlockFixer(models)
     for block in dem.blocks:
