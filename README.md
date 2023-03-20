@@ -25,6 +25,6 @@ PYTHONPATH=pydem python showros/showros.py e4m2_116.dem e4m2_116_fixed.dem
 
 ## Limitations
 
-I made this very quickly and it probably has bugs / could be made my accurate.
+I made this very quickly and it probably has bugs / could be made more accurate.
 One limitation is that the player never has a standing animation, since I
 couldn't find a good heuristic in the demo data.  Feel free to fork and improve.
