@@ -23,7 +23,7 @@ import sys
 import re
 
 import pydem
-import messages
+from pydem import messages
 
 
 # animation data taken from player.qc
